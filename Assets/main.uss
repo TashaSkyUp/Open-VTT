@@ -1,0 +1,5 @@
+.MyBut {
+    font-size: 14px;
+    -unity-text-align: middle-center;
+    white-space: normal;
+}
