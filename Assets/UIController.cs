@@ -23,10 +23,15 @@ public class UIController : MonoBehaviour
     public GameObject map;
     private List<TSU.DieRollerElement> dice = new List<TSU.DieRollerElement>();
     public Renderer maprenderer;
-
+    public GameObject TokenPrefab;
     public static UISTATES UISTATE {
-        get {  return uISTATE; }
-        set  {uISTATE = value;print(uISTATE); }
+        get { return uISTATE; }
+        set { uISTATE = value;print(uISTATE); }
+    }
+    private static Token mSelectedToken;
+    public static Token selectedToken {
+        get { return mSelectedToken; }
+        set { mSelectedToken=value; }
     }
 
     private Texture2D PickImage(int maxSize=-1)
@@ -65,12 +70,18 @@ public class UIController : MonoBehaviour
         var OpenImageMapButton = mydoc.rootVisualElement.Q<Button>("LoadMapImage");
         OpenImageMapButton.clicked += new System.Action(() => PickImage());
 
+        var AddTokenButton = mydoc.rootVisualElement.Q<Button>("AddToken");
+        AddTokenButton.clicked += new System.Action(() => AddToken());
 
         PopUp = mydoc.rootVisualElement.Q<Pop>("Pop"); PopUp.Init();
         Right = mydoc.rootVisualElement.Q<VisualElement>("right");
 
         setupdie();
 
+    }
+    private void AddToken()
+    {
+        GameObject.Instantiate(TokenPrefab,null);
     }
 
     private void setupdie()

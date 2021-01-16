@@ -6,27 +6,42 @@ namespace TSU
 {
     public class TokenMenu : VisualElement
     {
+        Button ColorButton;
         
         public new class UxmlFactory : UxmlFactory<TokenMenu, UxmlTraits> { }
-        public new class UxmlTraits : VisualElement.UxmlTraits { }
-
+        public new class UxmlTraits : VisualElement.UxmlTraits { }        
+        private float rnd() { return Random.Range(.5f, 1f); }
         
-        public void Init(string dieType,Pop lpopup, Label nhistory)
+        public TokenMenu()
         {
-            //history = nhistory;
-            //popup = lpopup;
-            Button button = this.Q<Button>("TokenColorButton");
-            button.text = dieType;
-            //button.clicked += new System.Action(roll);
-            //button.RegisterCallback<MouseDownEvent>((e) => roll(button.text));
-            button.RegisterCallback<ClickEvent>((e) => roll(button.text));
+            this.RegisterCallback<GeometryChangedEvent>(OnGeometryChange);
+            var childMargins = new StyleLength(5.0f);
+            
+        }
+
+        void OnGeometryChange(GeometryChangedEvent evt)
+        {
+            Draggable2D.evnt.AddListener(updateValues);
+            ColorButton = this.Q<Button>("TokenColorButton");
+            ColorButton.RegisterCallback<ClickEvent>((e) => changeColor());
+            
+        }
+        public void Init()
+        {
+        }
+        public void changeColor()
+        {
+            Debug.Log("test");
+            var nc = new Color(rnd(), rnd(), rnd(), 1);
+            UIController.selectedToken.Color = nc;
+            updateValues();   
+            
 
         }
-        public void roll(string what)
+        public void updateValues()
         {
-            
-          
-            
+            this.Q<Label>("TokenIDLabel").text="Token "+ UIController.selectedToken.id.ToString();
+            ColorButton.style.backgroundColor = new StyleColor(UIController.selectedToken.Color);
         }
 
     }

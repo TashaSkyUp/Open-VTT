@@ -4,7 +4,7 @@
     <ui:VisualElement name="screen" class="screen" style="flex-grow: 1; -unity-slice-left: 97; -unity-slice-top: 90; -unity-slice-right: 69; -unity-slice-bottom: 50; flex-direction: row; background-image: none;">
         <ui:VisualElement name="left" class="container" style="flex-grow: 1; padding-left: 0; padding-right: 0; padding-top: 0; max-width: 20%; min-width: 20%; width: 20%;">
             <ui:Button text="Load Map Image" display-tooltip-when-elided="true" name="LoadMapImage" class="MyBut" />
-            <ui:Button text="Add Marker" display-tooltip-when-elided="true" name="AddMarker" class="MyBut" />
+            <ui:Button text="Add Token" display-tooltip-when-elided="true" name="AddToken" class="MyBut" />
         </ui:VisualElement>
         <ui:VisualElement name="mid" class="container" style="flex-grow: 1; padding-left: 0; padding-right: 0; padding-top: 0;">
             <ui:VisualElement name="PopUpMid" style="background-color: rgba(255, 0, 2, 0.06); justify-content: center; align-items: center; width: 100%; height: 100%; background-image: none; -unity-background-image-tint-color: rgb(255, 127, 226); visibility: visible; border-top-left-radius: 10%; border-bottom-left-radius: 10%; border-top-right-radius: 10%; border-bottom-right-radius: 10%; display: flex; overflow: visible;">
@@ -14,7 +14,9 @@
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="right" class="container" style="width: 20%; border-left-width: 3px; padding-top: 0; max-width: 20%; min-width: 20%; padding-left: 0; padding-right: 0; padding-bottom: 0; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0;">
-            <ui:Instance template="TokenMenu" name="TokenMenu" />
+            <TSU.TokenMenu>
+                <ui:Instance template="TokenMenu" name="TokenMenu" />
+            </TSU.TokenMenu>
         </ui:VisualElement>
     </ui:VisualElement>
     <ui:VisualElement style="flex-direction: row;">

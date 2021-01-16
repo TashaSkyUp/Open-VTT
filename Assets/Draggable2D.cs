@@ -1,16 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Draggable2D : MonoBehaviour
 {
     // Start is called before the first frame update
     bool canMove;
     bool dragging;
+    public static UnityEvent evnt=new UnityEvent();
     CapsuleCollider collider;
     void Start()
     {
-        collider = GetComponent<CapsuleCollider>();
+        collider = GetComponentInChildren<CapsuleCollider>();
         canMove = false;
         dragging = false;
 
@@ -40,13 +42,14 @@ public class Draggable2D : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
 
-            var TokenHit = Physics.Raycast(mouseRay, out HitInfo,100,TokenMask.value);
-            
-            
+            var TokenHit = Physics.Raycast(mouseRay,out HitInfo,100,TokenMask.value);
+                        
             if (HitInfo.collider==collider)
             {
                 canMove = true;
                 UIController.UISTATE = UIController.UISTATES.dragToken;
+                UIController.selectedToken = gameObject.GetComponentInChildren<Token>();
+                evnt.Invoke();
             }
             else
             {
