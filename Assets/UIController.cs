@@ -15,6 +15,7 @@ public class UIController : MonoBehaviour
     public VisualTreeAsset dieRoller;
     private Button DieButton01;
     private VisualElement Right;
+    private static VisualElement TokenMenu;
     private Label History;
     private Pop PopUp;
 
@@ -31,7 +32,15 @@ public class UIController : MonoBehaviour
     private static Token mSelectedToken;
     public static Token selectedToken {
         get { return mSelectedToken; }
-        set { mSelectedToken=value; }
+        set {
+            mSelectedToken=value;
+            if (selectedToken != null) {
+                TokenMenu.style.display = DisplayStyle.Flex; 
+            } else {
+                TokenMenu.style.display = DisplayStyle.None; 
+            }
+           
+        }
     }
 
     private Texture2D PickImage(int maxSize=-1)
@@ -75,7 +84,7 @@ public class UIController : MonoBehaviour
 
         PopUp = mydoc.rootVisualElement.Q<Pop>("Pop"); PopUp.Init();
         Right = mydoc.rootVisualElement.Q<VisualElement>("right");
-
+        TokenMenu = mydoc.rootVisualElement.Q<VisualElement>("TokenMenu"); TokenMenu.style.display = DisplayStyle.None;
         setupdie();
 
     }
@@ -103,6 +112,7 @@ public class UIController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+       
         PopUp.update();
     }
     void roll()

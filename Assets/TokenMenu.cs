@@ -7,14 +7,15 @@ namespace TSU
     public class TokenMenu : VisualElement
     {
         Button ColorButton;
-        
+        private TextField NameField;
+
         public new class UxmlFactory : UxmlFactory<TokenMenu, UxmlTraits> { }
         public new class UxmlTraits : VisualElement.UxmlTraits { }        
         private float rnd() { return Random.Range(.5f, 1f); }
         
         public TokenMenu()
         {
-            this.RegisterCallback<GeometryChangedEvent>(OnGeometryChange);
+            this.RegisterCallback<GeometryChangedEvent>(OnGeometryChange);            
             var childMargins = new StyleLength(5.0f);
             
         }
@@ -23,9 +24,21 @@ namespace TSU
         {
             Draggable2D.evnt.AddListener(updateValues);
             ColorButton = this.Q<Button>("TokenColorButton");
-            ColorButton.RegisterCallback<ClickEvent>((e) => changeColor());
-            
+            if (ColorButton != null)
+            {
+                ColorButton.RegisterCallback<ClickEvent>((e) => changeColor());
+                this.Q<TextField>().RegisterCallback<ChangeEvent<string>>(e =>
+                {
+                    Debug.Log(e);
+                    UIController.selectedToken.name = e.newValue;
+                    updateValues();
+                });
+            }
+
+            //NameField
         }
+
+
         public void Init()
         {
         }
@@ -40,8 +53,12 @@ namespace TSU
         }
         public void updateValues()
         {
-            this.Q<Label>("TokenIDLabel").text="Token "+ UIController.selectedToken.id.ToString();
-            ColorButton.style.backgroundColor = new StyleColor(UIController.selectedToken.Color);
+            if (this.Q<Label>("TokenIDLabel") != null)
+            {
+                this.Q<Label>("TokenIDLabel").text = "Token " + UIController.selectedToken.id.ToString();
+                this.Q<TextField>().SetValueWithoutNotify(UIController.selectedToken.name);
+                ColorButton.style.backgroundColor = new StyleColor(UIController.selectedToken.Color);
+            }
         }
 
     }

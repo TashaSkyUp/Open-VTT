@@ -105,6 +105,7 @@ public class CameraController2D : MonoBehaviour
                 startPos = camera.ScreenToWorldPoint(Input.mousePosition) + camOffset;
                 DraggingCamera = true;
                 UIController.UISTATE = UIController.UISTATES.dragMap;
+                UIController.selectedToken = null;
                 return;
             }
             if (UIController.UISTATE == UIController.UISTATES.dragMap)

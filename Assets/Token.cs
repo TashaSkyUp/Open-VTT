@@ -8,6 +8,7 @@ public class Token : MonoBehaviour
     public static int lastTokenID;
     public Color color;
     public int id;
+    public new string name = "token name";
     public Color Color {
         get => color;
         set => updateColor(value);
@@ -24,6 +25,7 @@ public class Token : MonoBehaviour
     {
         id = lastTokenID + 1;
         lastTokenID = id;
+
     }
 
     // Update is called once per frame
