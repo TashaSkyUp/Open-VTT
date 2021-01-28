@@ -9,9 +9,15 @@ public class Token : MonoBehaviour
     public Color color;
     public int id;
     public new string name = "token name";
+    public float scale = 1;
     public Color Color {
         get => color;
         set => updateColor(value);
+    }
+    public float size { 
+        get { return scale*100; } 
+        set { scale = value / 100;
+            transform.localScale = Vector3.one * scale;}
     }
 
     private void updateColor(Color value)

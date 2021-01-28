@@ -2,28 +2,31 @@
 using UnityEngine.UIElements;
 using UnityEngine.UIElements.Experimental;
 
-namespace TSU
-{
     public class TokenMenu : VisualElement
     {
         Button ColorButton;
         private TextField NameField;
+        private Slider SizeSlider;
 
         public new class UxmlFactory : UxmlFactory<TokenMenu, UxmlTraits> { }
-        public new class UxmlTraits : VisualElement.UxmlTraits { }        
+        public new class UxmlTraits : VisualElement.UxmlTraits { }
         private float rnd() { return Random.Range(.5f, 1f); }
-        
+
         public TokenMenu()
         {
-            this.RegisterCallback<GeometryChangedEvent>(OnGeometryChange);            
-            var childMargins = new StyleLength(5.0f);
+            this.RegisterCallback<GeometryChangedEvent>(OnGeometryChange);
+            this.RegisterCallback<ClickEvent>(OnAttachToPanel);
             
         }
+        
 
-        void OnGeometryChange(GeometryChangedEvent evt)
+        public void init()
         {
+            Debug.Log("INIT");
+            
             Draggable2D.evnt.AddListener(updateValues);
-            ColorButton = this.Q<Button>("TokenColorButton");
+
+            ColorButton = (Button)this.Q("TokenColorButton");
             if (ColorButton != null)
             {
                 ColorButton.RegisterCallback<ClickEvent>((e) => changeColor());
@@ -34,14 +37,41 @@ namespace TSU
                     updateValues();
                 });
             }
-
-            //NameField
+            SizeSlider = this.Q<Slider>("SizeSlider");
+            if (SizeSlider != null)
+            {
+                SizeSlider.RegisterCallback<ClickEvent>((e) => changeColor());
+                this.Q<Slider>().RegisterCallback<ChangeEvent<float>>(e =>
+                {
+                    Debug.Log(e);
+                    UIController.selectedToken.size = e.newValue;
+                    updateValues();
+                });
+            }
         }
-
-
-        public void Init()
+        public override void HandleEvent(EventBase evt)
         {
+            Debug.Log("HE: "+ evt.ToString()+" "+this.childCount.ToString());
+            base.HandleEvent(evt);
         }
+
+        private void OnAttachToPanel(ClickEvent evt)
+        {
+            
+            Debug.Log(evt);
+
+        }
+
+        void OnGeometryChange(GeometryChangedEvent evt)
+        {
+
+            init();
+
+            
+        }
+
+
+     
         public void changeColor()
         {
             Debug.Log("test");
@@ -62,4 +92,3 @@ namespace TSU
         }
 
     }
-}

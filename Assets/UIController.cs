@@ -3,10 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using System.Reflection;
 using UnityEditor;
 using System.IO;
 using UnityEngine.Networking;
 using UnityEngine.UIElements.Experimental;
+
+
+public class initAbleVisualElement : VisualElement { public void init() { }
+}
+
+
 public class UIController : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -18,7 +25,7 @@ public class UIController : MonoBehaviour
     private static VisualElement TokenMenu;
     private Label History;
     private Pop PopUp;
-
+    public List<String> CustomUIElementIDs;
     public enum UISTATES { None, dragToken, dragMap, pinch, Pause };
     private static UISTATES uISTATE = UISTATES.None;
     public GameObject map;
@@ -67,11 +74,16 @@ public class UIController : MonoBehaviour
         return texture;
         
     }
-
+    
     void Start()
     {
         mydoc = gameObject.GetComponent<UIDocument>();
-        
+        //wakeup custom visual elements        
+        //TSU.TokenMenu TM = mydoc.rootVisualElement.Q<TSU.TokenMenu>();
+        //TM.init();
+
+
+
         HistoryClearButton = mydoc.rootVisualElement.Q<Button>("HistoryClear");
         HistoryClearButton.clicked += new System.Action(() => History.text = "");
         History = mydoc.rootVisualElement.Q<Label>("History");
@@ -84,7 +96,10 @@ public class UIController : MonoBehaviour
 
         PopUp = mydoc.rootVisualElement.Q<Pop>("Pop"); PopUp.Init();
         Right = mydoc.rootVisualElement.Q<VisualElement>("right");
-        TokenMenu = mydoc.rootVisualElement.Q<VisualElement>("TokenMenu"); TokenMenu.style.display = DisplayStyle.None;
+        
+        TokenMenu = mydoc.rootVisualElement.Q<VisualElement>("TokenMenu");
+        TokenMenu.style.display = DisplayStyle.None;
+
         setupdie();
 
     }

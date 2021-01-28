@@ -14,8 +14,9 @@
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="right" class="container" style="width: 20%; border-left-width: 3px; padding-top: 0; max-width: 20%; min-width: 20%; padding-left: 0; padding-right: 0; padding-bottom: 0; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0;">
-            <TSU.TokenMenu />
-            <ui:Instance template="TokenMenu" name="TokenMenu" style="visibility: visible; display: flex;" />
+            <ui:VisualElement style="background-color: rgba(132, 69, 104, 255);">
+                <ui:Instance template="TokenMenu" name="TokenMenu" />
+            </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
     <ui:VisualElement style="flex-direction: row;">
