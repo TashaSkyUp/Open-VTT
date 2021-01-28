@@ -30,24 +30,23 @@ using UnityEngine.UIElements.Experimental;
             if (ColorButton != null)
             {
                 ColorButton.RegisterCallback<ClickEvent>((e) => changeColor());
+                
                 this.Q<TextField>().RegisterCallback<ChangeEvent<string>>(e =>
                 {
                     Debug.Log(e);
                     UIController.selectedToken.name = e.newValue;
                     updateValues();
                 });
-            }
-            SizeSlider = this.Q<Slider>("SizeSlider");
-            if (SizeSlider != null)
-            {
-                SizeSlider.RegisterCallback<ClickEvent>((e) => changeColor());
+
                 this.Q<Slider>().RegisterCallback<ChangeEvent<float>>(e =>
                 {
                     Debug.Log(e);
                     UIController.selectedToken.size = e.newValue;
                     updateValues();
                 });
+
             }
+
         }
         public override void HandleEvent(EventBase evt)
         {
@@ -68,10 +67,7 @@ using UnityEngine.UIElements.Experimental;
             init();
 
             
-        }
-
-
-     
+        }     
         public void changeColor()
         {
             Debug.Log("test");
