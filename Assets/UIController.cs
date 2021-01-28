@@ -25,9 +25,10 @@ public class UIController : MonoBehaviour
     private static VisualElement TokenMenu;
     private Label History;
     private Pop PopUp;
-    public List<String> CustomUIElementIDs;
+    
     public enum UISTATES { None, dragToken, dragMap, pinch, Pause };
-    private static UISTATES uISTATE = UISTATES.None;
+    public static UISTATES uISTATE = UISTATES.None;
+
     public GameObject map;
     private List<TSU.DieRollerElement> dice = new List<TSU.DieRollerElement>();
     public Renderer maprenderer;

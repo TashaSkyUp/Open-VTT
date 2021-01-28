@@ -20,7 +20,7 @@ public class Pop : Label
     {
         decoration = this.parent.parent;
         //decoration.visible = false;
-        this.parent.RegisterCallback<MouseDownEvent>((e) => decoration.visible = false);
+        this.parent.RegisterCallback<MouseDownEvent>((e) => { decoration.visible = false;DEPOP(); });
     }
     
     public void POP(string text,float TimeoutSeconds=20,bool click_to_dismiss=true)
