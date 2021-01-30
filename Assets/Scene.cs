@@ -9,17 +9,23 @@ using UnityEngine;
 // Map name
 // Scale
 
-public class Scene : MonoBehaviour
+[System.Serializable]
+public class Scene
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public string Name;
+    public string Image;
+    public string Discription;
+    public List<Token> tokens;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public string ToJson(){
+        return JsonUtility.ToJson(this);
     }
+    public void LoadFromJson(string aJson){
+        JsonUtility.FromJsonOverwrite(aJson, this);
+    }
+}
+public interface ISavable
+{
+    void Populate(Scene aScene);
+    void Save(Scene aScene);
 }
