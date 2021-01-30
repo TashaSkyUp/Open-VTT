@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 325270775}
   - component: {fileID: 325270774}
   m_Layer: 9
-  m_Name: Map
+  m_Name: MapCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -264,7 +264,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1342472897
 Transform:
   m_ObjectHideFlags: 0
@@ -657,8 +657,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dieRoller: {fileID: 9197481963319205126, guid: d66c718515cc93e41bab21a765c852be, type: 3}
-  CustomUIElementIDs:
-  - TokenMenu
   map: {fileID: 325270773}
   maprenderer: {fileID: 325270775}
   TokenPrefab: {fileID: 408060841690100940, guid: cdb77931b54de1949a297194c988c9d7, type: 3}
