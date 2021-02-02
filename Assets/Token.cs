@@ -1,37 +1,30 @@
-﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 [System.Serializable]
-public class Token : MonoBehaviour
+public class Token :ISavable
 {
-    public static int lastTokenID;
-    public Color color;
+    public Vector3 position = new Vector3(0, 0, 0);
+    public float scale;
+    public Color Color;
     public int id;
-    public new string name = "token name";
-    public float scale = 1;
-    public Color Color {
-        get => color;
-        set => updateColor(value);
-    }
-    public float size { 
-        get { return scale*100; } 
-        set { scale = value / 100;
-            transform.localScale = Vector3.one * scale;}
+    public string name = "token name";
+    
+    public void Load(string SceneName)
+    {
+        throw new System.NotImplementedException();
     }
 
-    private void updateColor(Color value)
+    public void Save()
     {
-        color = value;
-        GetComponentInChildren<MeshRenderer>().material.color = color;
+        throw new System.NotImplementedException();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        id = lastTokenID + 1;
-        lastTokenID = id;
-
+        
     }
 
     // Update is called once per frame

@@ -10,10 +10,6 @@ using UnityEngine.Networking;
 using UnityEngine.UIElements.Experimental;
 
 
-public class initAbleVisualElement : VisualElement { public void init() { }
-}
-
-
 public class UIController : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -37,8 +33,10 @@ public class UIController : MonoBehaviour
         get { return uISTATE; }
         set { uISTATE = value;print(uISTATE); }
     }
-    private static Token mSelectedToken;
-    public static Token selectedToken {
+    private static TokenSkin mSelectedToken;
+    private VTTScene CurrentScene= new VTTScene(0);
+
+    public static TokenSkin selectedToken {
         get { return mSelectedToken; }
         set {
             mSelectedToken=value;
@@ -79,11 +77,6 @@ public class UIController : MonoBehaviour
     void Start()
     {
         mydoc = gameObject.GetComponent<UIDocument>();
-        //wakeup custom visual elements        
-        //TSU.TokenMenu TM = mydoc.rootVisualElement.Q<TSU.TokenMenu>();
-        //TM.init();
-
-
 
         HistoryClearButton = mydoc.rootVisualElement.Q<Button>("HistoryClear");
         HistoryClearButton.clicked += new System.Action(() => History.text = "");
@@ -101,12 +94,68 @@ public class UIController : MonoBehaviour
         TokenMenu = mydoc.rootVisualElement.Q<VisualElement>("TokenMenu");
         TokenMenu.style.display = DisplayStyle.None;
 
-        setupdie();
+        mydoc.rootVisualElement.Q<Button>("SaveScene").clicked += new Action(() => SaveScene());
+        mydoc.rootVisualElement.Q<Label>("MapNameLabel").RegisterCallback<ClickEvent>((e) => EditMapName(e));
+        
 
+        setupdie();
+        setupScene();
     }
+
+    private void EditMapName(ClickEvent e)
+    {
+        mydoc.rootVisualElement.Q<Label>("MapNameLabel").style.display = DisplayStyle.None;
+        
+        UISTATE = UISTATES.Pause;
+        var editfield = mydoc.rootVisualElement.Q<TextField>("MapNameEdit");
+        editfield.style.display = DisplayStyle.Flex;
+        editfield.SetValueWithoutNotify(CurrentScene.Name);
+
+        editfield.Q<Button>("Done").clicked += new Action(()=> {
+            mydoc.rootVisualElement.Q<Label>("MapNameLabel").style.display = DisplayStyle.Flex;
+            editfield.style.display = DisplayStyle.None;            
+            UISTATE = UISTATES.None;
+            CurrentScene.Name = editfield.text;
+            mydoc.rootVisualElement.Q<Label>("MapNameLabel").text = CurrentScene.Name;
+        });
+        
+
+        print("edit map name");
+    }
+
+    private void setupScene()
+    {
+        var LastScene = PlayerPrefs.GetString("LastScene");
+        if (LastScene == ""){
+            print("PlayerPrefs not initialized");
+            CurrentScene = new VTTScene((long)UnityEngine.Random.Range(0, long.MaxValue));
+        }
+        else
+        {
+            print(LastScene);
+            CurrentScene.Load(LastScene);
+            mydoc.rootVisualElement.Q<Label>("MapNameLabel").text = CurrentScene.Name;
+            foreach (var item in CurrentScene.Tokens)
+            {
+                var SkinGO=Instantiate(TokenPrefab, null);
+                print(SkinGO);
+                var SkinMBH = SkinGO.GetComponent<TokenSkin>();
+                SkinMBH.Token = item;
+            }
+        }
+        
+        
+    }
+
+    private void SaveScene()
+    {
+        CurrentScene.Save();
+    }
+
     private void AddToken()
     {
-        GameObject.Instantiate(TokenPrefab,null);
+        var tmp =GameObject.Instantiate(TokenPrefab,null);
+        CurrentScene.Tokens.Add(tmp.GetComponent<Token>());
     }
 
     private void setupdie()

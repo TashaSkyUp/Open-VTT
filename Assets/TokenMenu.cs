@@ -15,7 +15,7 @@ using UnityEngine.UIElements.Experimental;
         public TokenMenu()
         {
             this.RegisterCallback<GeometryChangedEvent>(OnGeometryChange);
-            this.RegisterCallback<ClickEvent>(OnAttachToPanel);
+
             
         }
         
@@ -33,14 +33,14 @@ using UnityEngine.UIElements.Experimental;
                 
                 this.Q<TextField>().RegisterCallback<ChangeEvent<string>>(e =>
                 {
-                    Debug.Log(e);
-                    UIController.selectedToken.name = e.newValue;
+                    //Debug.Log(e);
+                    UIController.selectedToken.Name = e.newValue;
                     updateValues();
                 });
 
                 this.Q<Slider>().RegisterCallback<ChangeEvent<float>>(e =>
                 {
-                    Debug.Log(e);
+                    //Debug.Log(e);
                     UIController.selectedToken.size = e.newValue;
                     updateValues();
                 });
@@ -50,16 +50,11 @@ using UnityEngine.UIElements.Experimental;
         }
         public override void HandleEvent(EventBase evt)
         {
-            Debug.Log("HE: "+ evt.ToString()+" "+this.childCount.ToString());
+            //Debug.Log("HE: "+ evt.ToString()+" "+this.childCount.ToString());
             base.HandleEvent(evt);
         }
 
-        private void OnAttachToPanel(ClickEvent evt)
-        {
-            
-            Debug.Log(evt);
 
-        }
 
         void OnGeometryChange(GeometryChangedEvent evt)
         {
@@ -70,7 +65,7 @@ using UnityEngine.UIElements.Experimental;
         }     
         public void changeColor()
         {
-            Debug.Log("test");
+            //Debug.Log("test");
             var nc = new Color(rnd(), rnd(), rnd(), 1);
             UIController.selectedToken.Color = nc;
             updateValues();   
@@ -82,7 +77,7 @@ using UnityEngine.UIElements.Experimental;
             if (this.Q<Label>("TokenIDLabel") != null)
             {
                 this.Q<Label>("TokenIDLabel").text = "Token " + UIController.selectedToken.id.ToString();
-                this.Q<TextField>().SetValueWithoutNotify(UIController.selectedToken.name);
+                this.Q<TextField>().SetValueWithoutNotify(UIController.selectedToken.Name);
                 ColorButton.style.backgroundColor = new StyleColor(UIController.selectedToken.Color);
             }
         }

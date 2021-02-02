@@ -3,3 +3,18 @@
     -unity-text-align: middle-center;
     white-space: normal;
 }
+
+.unity-text-field__label {
+    font-size: 14px;
+    flex-shrink: 1;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    display: flex;
+    -unity-text-align: upper-center;
+    white-space: normal;
+    justify-content: flex-start;
+    align-items: stretch;
+    width: auto;
+    max-width: 50%;
+    min-width: auto;
+}

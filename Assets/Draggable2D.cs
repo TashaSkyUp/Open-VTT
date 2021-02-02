@@ -18,6 +18,7 @@ public class Draggable2D : MonoBehaviour
 
     }
     // Update is called once per frame
+
     void Update()
     {
         
@@ -48,7 +49,7 @@ public class Draggable2D : MonoBehaviour
             {
                 canMove = true;
                 UIController.UISTATE = UIController.UISTATES.dragToken;
-                UIController.selectedToken = gameObject.GetComponentInChildren<Token>();
+                UIController.selectedToken = gameObject.GetComponentInChildren<TokenSkin>();
                 evnt.Invoke();
             }
             else
